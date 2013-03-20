@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ucommerz_Stockreport>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ucommerz_Stockreport>
+    </modules>
+</config>

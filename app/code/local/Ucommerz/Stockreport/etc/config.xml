@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ucommerz_Stockreport>
+            <version>0.1.0</version>
+        </Ucommerz_Stockreport>
+    </modules>
+
+    <admin>
+        <routers>
+            <stockreport>
+                <use>admin</use>
+                <args>
+                    <modules>
+                        <stockreport before="Mage_Adminhtml">Ucommerz_Stockreport_Adminhtml</stockreport>
+                    </modules>
+                    <module>Ucommerz_Stockreport</module>
+                    <frontName>stockreport</frontName>
+                </args>
+            </stockreport>
+        </routers>
+    </admin>
+
+    <global>
+        <models>
+            <ucommerz_stockreport>
+                <class>Ucommerz_Stockreport_Model</class>
+            </ucommerz_stockreport>
+        </models>
+
+        <helpers>
+            <ucommerz_stockreport>
+                <class>Ucommerz_Stockreport_Helper</class>
+            </ucommerz_stockreport>
+        </helpers>
+
+        <blocks>
+            <stockreport>
+                <class>Ucommerz_Stockreport_Block</class>
+            </stockreport>
+        </blocks>
+
+        <template>
+            <email>
+                <ucommerz_stockreport_ucommerz_stockreport_settings_report_template translate="label" module="ucommerz_stockreport">
+                    <label>Low Stock Notification</label>
+                    <file>stockreport/emailreport.html</file>
+                    <type>html</type>
+               </ucommerz_stockreport_ucommerz_stockreport_settings_report_template>
+            </email>
+        </template>
+
+    </global>
+
+    <crontab>
+        <jobs>
+            <ucommerz_stockreport_email>
+                <run><model>ucommerz_stockreport/cron::emailreport</model></run>
+                <schedule>
+                    <config_path>ucommerz_stockreport/ucommerz_stockreport_settings/report_schedule</config_path>
+                </schedule>
+            </ucommerz_stockreport_email>
+        </jobs>
+    </crontab>
+
+    <default>
+        <ucommerz_stockreport>
+            <ucommerz_stockreport_settings>
+                <report_enabled>0</report_enabled>
+                <report_from_email>general</report_from_email>
+                <report_to_email></report_to_email>
+                <report_template>ucommerz_stockreport_ucommerz_stockreport_settings_report_template</report_template>
+                <report_threshold>5</report_threshold>
+                <report_schedule>0 6 * * *</report_schedule>
+            </ucommerz_stockreport_settings>
+        </ucommerz_stockreport>
+    </default>
+
+</config>
