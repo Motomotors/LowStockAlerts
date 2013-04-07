@@ -3,6 +3,10 @@ class Ucommerz_Stockreport_Model_Cron
 {
     public function emailreport()
     {
-        Mage::getModel('ucommerz_stockreport/report')->sendReport();
+        $reporter = Mage::getModel('ucommerz_stockreport/report');
+
+        // If disabled don't send the email
+        if ($reporter->isEnabled()) Mage::log($reporter->sendReport());;
+
     }
 }
