@@ -1,4 +1,4 @@
 # My_Module, just an example
-app/code/local/Ucommerz/Stockreport/*                   app/code/local/Ucommerz/Stockreport/
-locale/en_US/template/email/stockreport/*      locale/en_US/template/email/stockreport/
+app/code/local/Ucommerz/Stockreport                   app/code/local/Ucommerz/Stockreport/
+locale/en_US/template/email/stockreport      locale/en_US/template/email/stockreport/
 etc/modules/Ucommerz_Stockreport.xml          etc/modules/Ucommerz_Stockreport.xml
