@@ -15,6 +15,7 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
     private $_template = null;
     private $_threshold = null;
     private $_exclude_disabled = null;
+    private $_exclude_parent = null;
 
 	/**
 	 * (non-PHPdoc)
@@ -28,6 +29,7 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
         $this->_template = Mage::getStoreConfig('ucommerz_stockreport/ucommerz_stockreport_settings/report_template');
         $this->_threshold = Mage::getStoreConfig('ucommerz_stockreport/ucommerz_stockreport_settings/report_threshold');
         $this->_exclude_disabled = Mage::getStoreConfig('ucommerz_stockreport/ucommerz_stockreport_settings/report_exclude_disabled');
+        $this->_exclude_parent = Mage::getStoreConfig('ucommerz_stockreport/ucommerz_stockreport_settings/report_exclude_parent');
 
 	} // end
 
@@ -86,11 +88,11 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
         if ($this->_exclude_disabled && ($product->getStatus() == 2)) return false;
 
         // if this product is a configurable/grouped/bundled product, then disclude this product
-        switch ($product->getType()) {
+        switch ($product->getTypeId()) {
             case 'configurable':
             case 'grouped':
             case 'bundle':
-                return false;
+                return $this->_exclude_parent;  // Only return false if we've set "exlude parent products" in our settings
             default:
                 break;
         }

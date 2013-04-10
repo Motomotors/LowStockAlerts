@@ -72,6 +72,7 @@
                 <report_template>ucommerz_stockreport_ucommerz_stockreport_settings_report_template</report_template>
                 <report_threshold>5</report_threshold>
                 <report_exclude_disabled>1</report_exclude_disabled>
+                <report_exclude_parent>1</report_exclude_parent>
                 <report_schedule>0 6 * * *</report_schedule>
             </ucommerz_stockreport_settings>
         </ucommerz_stockreport>
