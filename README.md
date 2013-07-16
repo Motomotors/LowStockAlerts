@@ -1,8 +1,7 @@
 LowStockAlerts
 ==============
 
-For installation instructions, howto info, please visit our documentation page for the latest help and FAQs
-http://docs.ucommerz.com/index.php?title=Low_Stock_Notifications
+Install this extension with Modman (https://github.com/colinmollenhour/modman)
 
 For support please contact us via:
 http://www.ucommerz.com/contact/
