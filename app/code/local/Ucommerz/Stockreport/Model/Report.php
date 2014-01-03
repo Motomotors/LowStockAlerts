@@ -61,7 +61,13 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
 
                 if ($this->belongsToReport($product)) {
                     $countIncludedProducts++;
-                    $html .= "<tr><td>".$product->getName()."</td><td>".$product->getSku()."</td><td>".round($item->getQty())."</td><td>".($product->getIsInStock()?"Yes":"No")."</td><td>".($product->getStatus()==1 ? "Enabled":"Disabled")."</td></tr>\n";
+                    $html .= "<tr>";
+                    $html .= "<td>".$product->getName()."</td>";
+                    $html .= "<td>".$product->getSku()."</td>";
+                    $html .= "<td>".round($item->getQty())."</td>";
+                    $html .= "<td>".($product->getIsInStock()?"Yes":"No")."</td>";
+                    $html .= "<td>".($product->getStatus()==1 ? "Enabled":"Disabled")."</td>";
+                    $html .= "</tr>\n";
                 }
 
             }
@@ -92,7 +98,7 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
             case 'configurable':
             case 'grouped':
             case 'bundle':
-                return $this->_exclude_parent;  // Only return false if we've set "exlude parent products" in our settings
+                return $this->_exclude_parent ? false : true;  // Only return false if we've set "exlude parent products" in our settings
             default:
                 break;
         }
