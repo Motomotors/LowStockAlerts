@@ -1,9 +1,9 @@
 <?php
 /**
- * Ucommerz Export Sales to Capacity
+ * Ucommerz Low Stock Report
  *
  * @category    Ucommerz
- * @package     Ucommerz_Capacity
+ * @package     Ucommerz_Stockreport
  * @author      Chris Rose <chris@ucommerz.com>
  */
 class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract

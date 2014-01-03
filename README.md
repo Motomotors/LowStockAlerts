@@ -1,7 +1,7 @@
 LowStockAlerts
 ==============
 
-Use modman to install this module!
+Install this extension with Modman (https://github.com/colinmollenhour/modman)
 
 For support please contact us via:
 http://www.ucommerz.com/contact/
