@@ -16,6 +16,9 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
     private $_threshold = null;
     private $_exclude_disabled = null;
     private $_exclude_parent = null;
+    private $_exclude_last_sent = null;
+    private $_existing_skus = null;
+    private $_included_skus = null;
 
 	/**
 	 * (non-PHPdoc)
@@ -30,6 +33,7 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
         $this->_threshold = Mage::getStoreConfig('ucommerz_stockreport/ucommerz_stockreport_settings/report_threshold');
         $this->_exclude_disabled = Mage::getStoreConfig('ucommerz_stockreport/ucommerz_stockreport_settings/report_exclude_disabled');
         $this->_exclude_parent = Mage::getStoreConfig('ucommerz_stockreport/ucommerz_stockreport_settings/report_exclude_parent');
+        $this->_exclude_last_sent = Mage::getStoreConfig('ucommerz_stockreport/ucommerz_stockreport_settings/report_exclude_last_sent');
 
 	} // end
 
@@ -53,13 +57,20 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
 
             $product=null;
             $countIncludedProducts=0;
-
+            
+            //remove skus that with updated inventory and above the threshold
+			Mage::helper('ucommerz_stockreport')->removeSkusWithUpdatedInventory($this->_threshold);
+			
+			//get the skus that are already sent to email
+			$this->_existing_skus = Mage::helper('ucommerz_stockreport')->getSkuList();
+			$this->_included_skus = array();
             foreach ($items as $item) {
 
                 // Get the product
                 $product = Mage::getModel('catalog/product')->load($item->getProductId());
 
                 if ($this->belongsToReport($product)) {
+					$this->_included_skus[] = $product->getSku();
                     $countIncludedProducts++;
                     $html .= "<tr>";
                     $html .= "<td>".$product->getName()."</td>";
@@ -81,14 +92,33 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
         {
             return "ERROR|There was a problem creating the report".$e->getMessage();
         }
-
-        return $this->sendEmail($html);
+        
+		try
+		{
+		    if($this->sendEmail($html))
+		    {
+		    	Mage::helper('ucommerz_stockreport')->writeSkuList($this->_included_skus);
+		    	return "NOTICE|Low Stock Report Sent Successfully";
+		    }
+			else
+			{
+				return "ERROR|Low Stock Report could not be delivered to all recipients";
+			}
+		}
+		catch (Exception $e)
+        {
+            return "ERROR|There was a problem sending the report - ".$e->getMessage();
+        }
 
     } // end
 
 
     // Use this method to validate items for inclusion in the report
     private function belongsToReport($product) {
+    
+    	//exclude if it has been sent already
+    	if($this->_exclude_last_sent && in_array($product->getSku(), $this->_existing_skus))
+    		return false;
 
         // if we're excluding the disabled products AND the product is disabled, then disclude the product
         if ($this->_exclude_disabled && ($product->getStatus() == 2)) return false;
@@ -107,6 +137,7 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
         return true;
 
     }
+    
 
     private function sendEmail($html) {
 
@@ -136,11 +167,9 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
         catch (Exception $e)
         {
             // log($e->getMessage());
-            return "ERROR|There was a problem sending the report - ".$e.getMessage();
+            throw new Exception("ERROR|There was a problem sending the report - ".$e->getMessage());
         }
-
-        return $result ? "NOTICE|Low Stock Report Sent Successfully" : "ERROR|Low Stock Report could not be delivered to all recipients";
-
+        return $result;
     }
 
 } // end class

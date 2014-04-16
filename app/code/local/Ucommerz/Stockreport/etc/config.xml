@@ -25,9 +25,37 @@
         <models>
             <ucommerz_stockreport>
                 <class>Ucommerz_Stockreport_Model</class>
+                <resourceModel>stockreport_mysql4</resourceModel>
             </ucommerz_stockreport>
+            <stockreport_mysql4>
+                <class>Ucommerz_Stockreport_Model_Mysql4</class>
+                <entities>
+                    <stockreport>
+                        <table>ucommerz_stockreport</table>
+                    </stockreport>
+                </entities>
+            </stockreport_mysql4>
         </models>
-
+		<resources>
+			<stockreport_setup>
+				<setup>
+					<module>Ucommerz_Stockreport</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</stockreport_setup>
+			<stockreport_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</stockreport_write>
+			<stockreport_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</stockreport_read>
+		</resources>
         <helpers>
             <ucommerz_stockreport>
                 <class>Ucommerz_Stockreport_Helper</class>
@@ -73,6 +101,7 @@
                 <report_threshold>5</report_threshold>
                 <report_exclude_disabled>1</report_exclude_disabled>
                 <report_exclude_parent>1</report_exclude_parent>
+                <report_exclude_last_sent>0</report_exclude_last_sent>
                 <report_schedule>0 6 * * *</report_schedule>
             </ucommerz_stockreport_settings>
         </ucommerz_stockreport>

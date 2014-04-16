@@ -9,7 +9,7 @@
 							<config>
 								<children>
 									<ucommerz_stockreport translate="title">
-										<title>Ucommerz Section</title>
+										<title>Ucommerz Stock Report</title>
 									</ucommerz_stockreport>
 								</children>								
 							</config>
