@@ -67,7 +67,7 @@
                 <class>Ucommerz_Stockreport_Block</class>
             </stockreport>
         </blocks>
-
+        <!--
         <template>
             <email>
                 <ucommerz_stockreport_ucommerz_stockreport_settings_report_template translate="label" module="ucommerz_stockreport">
@@ -77,7 +77,7 @@
                </ucommerz_stockreport_ucommerz_stockreport_settings_report_template>
             </email>
         </template>
-
+        -->
     </global>
 
     <crontab>
