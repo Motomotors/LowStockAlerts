@@ -7,6 +7,7 @@ class Ucommerz_Stockreport_Model_Adminhtml_System_Config_Backend_Lsenmodel_Cron 
     protected function _afterSave()
     {
         $cronExprString = $this->getData('groups/ucommerz_stockreport_settings/fields/report_schedule/value');
+        Mage::log($cronExprString);
  
         try {
             Mage::getModel('core/config_data')
