@@ -120,6 +120,7 @@
                         <report_schedule translate="label">
                             <label>Report Cron Schedule</label>
                             <frontend_type>text</frontend_type>
+                            <backend_model>stockreport/adminhtml_system_config_backend_lsenmodel_cron</backend_model>
                             <sort_order>80</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
