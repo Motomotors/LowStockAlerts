@@ -83,7 +83,9 @@
             <ucommerz_stockreport_email>
                 <run><model>ucommerz_stockreport/cron::emailreport</model></run>
                 <schedule>
-                    <config_path>ucommerz_stockreport/ucommerz_stockreport_settings/report_schedule</config_path>
+                	<cron_expr>
+                    	<config_path>ucommerz_stockreport/ucommerz_stockreport_settings/report_schedule</config_path>
+                    </cron_expr>
                 </schedule>
             </ucommerz_stockreport_email>
         </jobs>
