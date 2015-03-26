@@ -5,7 +5,7 @@
     <tabs>
         <ucommerz translate="label">
             <label>Ucommerz</label>
-            <sort_order>1</sort_order>
+            <sort_order>700</sort_order>
         </ucommerz>
     </tabs>
 
@@ -105,7 +105,7 @@
                             <show_in_store>1</show_in_store>
                             <comment><![CDATA[Excludes the parent product for Configurable, Grouped and Bundle Products]]></comment>
                         </report_exclude_parent>
-                        
+
                         <report_exclude_last_sent>
                         	<label>Exclude From Last Sent Email</label>
                             <frontend_type>select</frontend_type>
