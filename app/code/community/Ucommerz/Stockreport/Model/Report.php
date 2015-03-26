@@ -47,7 +47,7 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
 
         try {
 
-            // Get the stock items for everything under the stock threshold
+            // Get all stock items
             $items = Mage::getModel('cataloginventory/stock_item')
                 ->getCollection();
 
@@ -159,7 +159,8 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
                         $this->_from_email,
                         trim($recipient),
                         null,
-                        array('items'=>$html));
+                        array('items'=>$html)
+                    );
 
                 $result = $mail->getSentSuccess() ? $result : false;
             }
@@ -167,7 +168,6 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
         }
         catch (Exception $e)
         {
-            // log($e->getMessage());
             throw new Exception("ERROR|There was a problem sending the report - ".$e->getMessage());
         }
         return $result;
