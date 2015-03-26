@@ -74,12 +74,11 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
                     if ($this->belongsToReport($product)) {
     					$this->_included_skus[] = $product->getSku();
                         $countIncludedProducts++;
-                        $html .= "<tr>";
-                        $html .= "<td>".$product->getName()."</td>";
-                        $html .= "<td>".$product->getSku()."</td>";
-                        $html .= "<td>".round($item->getQty())."</td>";
-                        $html .= "<td>".($product->getIsInStock()?"Yes":"No")."</td>";
-                        $html .= "<td>".($product->getStatus()==1 ? "Enabled":"Disabled")."</td>";
+                        $html .= "<tr style=\"border-size:1px; border-color:#000000; border-style:solid;\">";
+                        $html .= "<td style=\"border-size:1px; border-color:#000000; border-style:solid;\">".$product->getSku()."</td>";
+                        $html .= "<td style=\"border-size:1px; border-color:#000000; border-style:solid;\">".$product->getName()."</td>";
+                        $html .= "<td style=\"border-size:1px; border-color:#000000; border-style:solid;\">".round($item->getQty())."</td>";
+                        $html .= "<td style=\"border-size:1px; border-color:#000000; border-style:solid;\">".($product->getIsInStock()?"Yes":"No")."</td>";
                         $html .= "</tr>\n";
                     }
                 }
