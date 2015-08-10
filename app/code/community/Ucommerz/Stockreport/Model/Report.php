@@ -74,11 +74,11 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
                     if ($this->belongsToReport($product)) {
     					$this->_included_skus[] = $product->getSku();
                         $countIncludedProducts++;
-                        $html .= "<tr style=\"border-size:1px; border-color:#000000; border-style:solid;\">";
-                        $html .= "<td style=\"border-size:1px; border-color:#000000; border-style:solid;\">".$product->getSku()."</td>";
-                        $html .= "<td style=\"border-size:1px; border-color:#000000; border-style:solid;\">".$product->getName()."</td>";
-                        $html .= "<td style=\"border-size:1px; border-color:#000000; border-style:solid;\">".round($item->getQty())."</td>";
-                        $html .= "<td style=\"border-size:1px; border-color:#000000; border-style:solid;\">".($product->getIsInStock()?"Yes":"No")."</td>";
+                        $html .= "<tr style=\"border-width:1px; border-color:#000000; border-style:solid;\">";
+                        $html .= "<td style=\"border-width:1px; border-color:#000000; border-style:solid;\">".$product->getSku()."</td>";
+                        $html .= "<td style=\"border-width:1px; border-color:#000000; border-style:solid;\">".$product->getName()."</td>";
+                        $html .= "<td style=\"border-width:1px; border-color:#000000; border-style:solid;\">".round($item->getQty())."</td>";
+                        $html .= "<td style=\"border-width:1px; border-color:#000000; border-style:solid;\">".($product->getIsInStock()?"In Stock":"<span style=\"color:#FF0000\">Out of Stock</span>")."</td>";
                         $html .= "</tr>\n";
                     }
                 }
