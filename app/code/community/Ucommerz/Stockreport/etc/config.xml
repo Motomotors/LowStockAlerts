@@ -2,22 +2,19 @@
 <config>
     <modules>
         <Ucommerz_Stockreport>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </Ucommerz_Stockreport>
     </modules>
 
     <admin>
         <routers>
-            <stockreport>
-                <use>admin</use>
+            <adminhtml>
                 <args>
                     <modules>
-                        <stockreport before="Mage_Adminhtml">Ucommerz_Stockreport_Adminhtml</stockreport>
+                        <Ucommerz_Stockreport_Adminhtml before="Mage_Adminhtml">Ucommerz_Stockreport_Adminhtml</Ucommerz_Stockreport_Adminhtml>
                     </modules>
-                    <module>Ucommerz_Stockreport</module>
-                    <frontName>stockreport</frontName>
                 </args>
-            </stockreport>
+            </adminhtml>
         </routers>
     </admin>
 

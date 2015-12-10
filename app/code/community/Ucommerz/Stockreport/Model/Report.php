@@ -47,40 +47,41 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
 
         try {
 
-            // Get the stock items for everything under the stock threshold
+            // Get all stock items
             $items = Mage::getModel('cataloginventory/stock_item')
-                ->getCollection()
-                ->addQtyFilter('<=', $this->_threshold);
+                ->getCollection();
 
             // This is not a correct check
             if (count($items) == 0) return "NOTICE|You currently have no Low Stock Items";
 
             $product=null;
             $countIncludedProducts=0;
-            
+
             //remove skus that with updated inventory and above the threshold
 			Mage::helper('ucommerz_stockreport')->removeSkusWithUpdatedInventory($this->_threshold);
-			
+
 			//get the skus that are already sent to email
 			$this->_existing_skus = Mage::helper('ucommerz_stockreport')->getSkuList();
 			$this->_included_skus = array();
             foreach ($items as $item) {
+                //Check that "Inventory" has "Manage Stock" set to "Yes" and
+                //has less or equal stock than the "Notify for Quantity Below"
+                //amount.
+                if($item->getManageStock()==1 && $item->getStockQty() <= $item->getNotifyStockQty()){
+                    // Get the product
+                    $product = Mage::getModel('catalog/product')->load($item->getProductId());
 
-                // Get the product
-                $product = Mage::getModel('catalog/product')->load($item->getProductId());
-
-                if ($this->belongsToReport($product)) {
-					$this->_included_skus[] = $product->getSku();
-                    $countIncludedProducts++;
-                    $html .= "<tr>";
-                    $html .= "<td>".$product->getName()."</td>";
-                    $html .= "<td>".$product->getSku()."</td>";
-                    $html .= "<td>".round($item->getQty())."</td>";
-                    $html .= "<td>".($product->getIsInStock()?"Yes":"No")."</td>";
-                    $html .= "<td>".($product->getStatus()==1 ? "Enabled":"Disabled")."</td>";
-                    $html .= "</tr>\n";
+                    if ($this->belongsToReport($product)) {
+    					$this->_included_skus[] = $product->getSku();
+                        $countIncludedProducts++;
+                        $html .= "<tr style=\"border-width:1px; border-color:#000000; border-style:solid;\">";
+                        $html .= "<td style=\"border-width:1px; border-color:#000000; border-style:solid;\">".$product->getSku()."</td>";
+                        $html .= "<td style=\"border-width:1px; border-color:#000000; border-style:solid;\">".$product->getName()."</td>";
+                        $html .= "<td style=\"border-width:1px; border-color:#000000; border-style:solid;\">".round($item->getQty())."</td>";
+                        $html .= "<td style=\"border-width:1px; border-color:#000000; border-style:solid;\">".($product->getIsInStock()?"In Stock":"<span style=\"color:#FF0000\">Out of Stock</span>")."</td>";
+                        $html .= "</tr>\n";
+                    }
                 }
-
             }
 
             // If we don't have any products to send, then don't send the email
@@ -92,7 +93,7 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
         {
             return "ERROR|There was a problem creating the report".$e->getMessage();
         }
-        
+
 		try
 		{
 		    if($this->sendEmail($html))
@@ -115,7 +116,7 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
 
     // Use this method to validate items for inclusion in the report
     private function belongsToReport($product) {
-    
+
     	//exclude if it has been sent already
     	if($this->_exclude_last_sent && in_array($product->getSku(), $this->_existing_skus))
     		return false;
@@ -137,7 +138,7 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
         return true;
 
     }
-    
+
 
     private function sendEmail($html) {
 
@@ -158,7 +159,8 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
                         $this->_from_email,
                         trim($recipient),
                         null,
-                        array('items'=>$html));
+                        array('items'=>$html)
+                    );
 
                 $result = $mail->getSentSuccess() ? $result : false;
             }
@@ -166,7 +168,6 @@ class Ucommerz_Stockreport_Model_Report extends Mage_Core_Model_Abstract
         }
         catch (Exception $e)
         {
-            // log($e->getMessage());
             throw new Exception("ERROR|There was a problem sending the report - ".$e->getMessage());
         }
         return $result;

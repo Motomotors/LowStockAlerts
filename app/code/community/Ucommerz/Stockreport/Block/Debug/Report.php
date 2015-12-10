@@ -9,7 +9,7 @@ class Ucommerz_Stockreport_Block_Debug_Report extends Mage_Adminhtml_Block_Syste
     }
 
     protected function _getAddRowButtonHtml($title) {
-        $url = Mage::helper('adminhtml')->getUrl("stockreport/debug/sendreport");
+        $url = Mage::helper('adminhtml')->getUrl("adminhtml/ustockreport_debug/sendreport");
 
         return $this->getLayout()->createBlock('adminhtml/widget_button')
                         ->setType('button')
