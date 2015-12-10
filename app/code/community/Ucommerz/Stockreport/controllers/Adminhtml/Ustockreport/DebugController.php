@@ -4,7 +4,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-class Ucommerz_Stockreport_Adminhtml_DebugController extends Mage_Adminhtml_Controller_Action
+class Ucommerz_Stockreport_Adminhtml_Ustockreport_DebugController extends Mage_Adminhtml_Controller_Action
 {
 
     public function sendreportAction()
